@@ -2,11 +2,11 @@
 // @id             iitc-plugin-autodraw-show-area@randomizax
 // @name           IITC plugin: show CF area in AutoDraw window
 // @category       Info
-// @version        0.1.0.20160506.70310
+// @version        0.1.1.20160514.42138
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      https://rawgit.com/randomizax/autodraw-show-area/latest/autodraw-show-area.meta.js
 // @downloadURL    https://rawgit.com/randomizax/autodraw-show-area/latest/autodraw-show-area.user.js
-// @description    [randomizax-2016-05-06-070310] Show CF area when selecting three portals in AutoDraw dialog of the Bookmark plugin. Be sure to load after the Bookmark plugin.
+// @description    [randomizax-2016-05-14-042138] Show CF area when selecting three portals in AutoDraw dialog of the Bookmark plugin. Be sure to load after the Bookmark plugin.
 // @include        https://www.ingress.com/intel*
 // @include        http://www.ingress.com/intel*
 // @match          https://www.ingress.com/intel*
@@ -22,7 +22,7 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 //PLUGIN AUTHORS: writing a plugin outside of the IITC build environment? if so, delete these lines!!
 //(leaving them in place might break the 'About IITC' page or break update checks)
 // plugin_info.buildName = 'randomizax';
-// plugin_info.dateTimeVersion = '20160506.70310';
+// plugin_info.dateTimeVersion = '20160514.42138';
 // plugin_info.pluginId = 'autodraw-show-area';
 //END PLUGIN AUTHORS NOTE
 
@@ -56,15 +56,18 @@ var setup =  function() {
       } else if(latlngs.length == 3) {
         var longdistance = false;
         var dst = [];
+        var lls = [];
         var distances = latlngs.map(function(ll1, i, latlngs) {
           var ll2 = latlngs[(i+1)%3];
-          var d = L.latLng(ll1).distanceTo(ll2);
+          var l = L.latLng(ll1);
+          lls.push(l);
+          var d = l.distanceTo(ll2);
           dst.push(d);
           return formatDistance(d);
         });
         text = 'Distances: ' + distances.join(", ");
-        var s = (dst[0] + dst[1] + dst[2]) / 2.0;
-        var area = Math.sqrt(s * (s - dst[0]) * (s - dst[1]) * (s - dst[2]));
+        console.log(["latlngs",lls]);
+        var area = L.GeometryUtil.geodesicArea(lls);
         var areatext = (area/1000000).toPrecision(4) + "km²";
         text += "<br/>Area: " + areatext;
         color = "";
