@@ -2,7 +2,7 @@
 // @id             iitc-plugin-autodraw-show-area@randomizax
 // @name           IITC plugin: show CF area in AutoDraw window
 // @category       Info
-// @version        0.1.1.@@DATETIMEVERSION@@
+// @version        0.1.2.@@DATETIMEVERSION@@
 // @namespace      https://github.com/jonatkins/ingress-intel-total-conversion
 // @updateURL      @@UPDATEURL@@
 // @downloadURL    @@DOWNLOADURL@@
@@ -54,7 +54,6 @@ var setup =  function() {
           return formatDistance(d);
         });
         text = 'Distances: ' + distances.join(", ");
-        console.log(["latlngs",lls]);
         var area = L.GeometryUtil.geodesicArea(lls);
         var areatext = (area/1000000).toPrecision(4) + "km²";
         text += "<br/>Area: " + areatext;
