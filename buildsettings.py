@@ -15,7 +15,7 @@ buildSettings = {
     # no external resources allowed - they're not needed any more
     'randomizax': {
         'resourceUrlBase': None,
-        'distUrlBase': 'https://rawgit.com/randomizax/autodraw-show-area/latest',
+        'distUrlBase': 'https://randomizax.github.io/autodraw-show-area',
     },
 
     # local8000: if you need to modify external resources, this build will load them from
